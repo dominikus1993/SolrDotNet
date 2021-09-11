@@ -9,5 +9,7 @@ namespace SolrDotNet.Cloud.Types
     public interface ISolrCollection
     {
         string Name { get; }
+
+        string GetUrl();
     }
 }
