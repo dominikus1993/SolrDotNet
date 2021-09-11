@@ -6,6 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="SolrNet" Version="1.0.19" />
+    <PackageReference Include="ZooKeeperNetEx" Version="3.4.12.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Types\Solr\" />
   </ItemGroup>
 
 </Project>
