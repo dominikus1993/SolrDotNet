@@ -14,7 +14,7 @@ namespace SolrDotNet.Cloud.ConnectionManager
         private const string CollectionsZkNode = "/collections";
         private const string LiveNodesZkNode = "/live_nodes";
 
-        public ZookeeperSolrCloudConnectionManager(string zooKeeperConnection, int zooKeeperTimeoutMs = 10_000)
+        internal ZookeeperSolrCloudConnectionManager(string zooKeeperConnection, int zooKeeperTimeoutMs = 10_000)
         {
             if (string.IsNullOrEmpty(zooKeeperConnection))
                 throw new ArgumentNullException(nameof(zooKeeperConnection));
