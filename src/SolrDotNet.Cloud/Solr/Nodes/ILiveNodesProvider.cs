@@ -1,10 +1,22 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace SolrDotNet.Cloud.Solr.Nodes
 {
-    public record LiveNode(string Name);
+    public record SolrLiveNode(string Url)
+    {
+        public string GetAliasUrl(string alias)
+        {
+            if (string.IsNullOrEmpty(alias))
+            {
+                throw new ArgumentNullException(nameof(alias));
+            }
+            return $"{Url}/{alias}";
+        }
+    }
+
     public interface ILiveNodesProvider
     {
-        Task<LiveNode> Provide();
+        Task<SolrLiveNode> Provide();
     }
 }

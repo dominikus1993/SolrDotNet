@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SolrDotNet.Cloud.Solr.Nodes;
+using SolrDotNet.Cloud.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +10,25 @@ namespace SolrDotNet.Cloud.Types
 {
     internal class SolrCollectionAlias : ISolrCollection
     {
-        public string Name => throw new NotImplementedException();
+        public string Name { get; }
+        private readonly List<string> _urls;
+        private readonly Random random = new();
 
-        public string GetUrl()
+        public SolrCollectionAlias(string name, List<string>? liveNodes)
         {
-            throw new NotImplementedException();
+            Name = name;
+            _urls = SolrLiveNodesParser.Parse(liveNodes).Select(node => node.GetAliasUrl(name)).ToList();
+        }
+
+        public string? GetUrl()
+        {
+            var node = _urls.Count switch
+            {
+                0 => throw new Exception("No Alive Node"),
+                1 => _urls[0],
+                int count => _urls[random.Next(0, count)]
+            };
+            return node;
         }
     }
 }
