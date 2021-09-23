@@ -19,9 +19,9 @@ namespace SolrDotNet.Cloud.Utils
             }
 
             return nodes
-                    .Select(node => node.Split("_"))
-                    .Where(addresAndSuffix => addresAndSuffix.Length == 2 && addresAndSuffix[1] == "solr")
-                    .Select(addresAndSuffix => new SolrLiveNode($"http://{addresAndSuffix[0]}/solr"));
+                    .Select(node => (node, addresAndSuffix: node.Split("_")))
+                    .Where(n => n.addresAndSuffix.Length == 2 && n.addresAndSuffix[1] == "solr")
+                    .Select(n => new SolrLiveNode(n.node, $"http://{n.addresAndSuffix[0]}/solr"));
         }
     }
 }

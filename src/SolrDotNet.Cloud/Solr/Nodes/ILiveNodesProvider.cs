@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace SolrDotNet.Cloud.Solr.Nodes
 {
-    public record SolrLiveNode(string Url)
+    public record SolrLiveNode(string Name, string Url)
     {
         public string GetAliasUrl(string alias)
         {

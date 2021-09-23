@@ -18,7 +18,7 @@ namespace SolrDotNet.Cloud.Tests.Utils
             subject.Should().NotBeNullOrEmpty();
             subject.Should().HaveCount(1);
             var node = subject[0];
-            node.Should().Be(new SolrLiveNode("http://172.18.0.3:8983/solr"));
+            node.Should().Be(new SolrLiveNode("172.18.0.3:8983_solr", "http://172.18.0.3:8983/solr"));
             node.Url.Should().Be("http://172.18.0.3:8983/solr");
         }
 
