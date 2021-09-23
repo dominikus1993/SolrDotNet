@@ -1,4 +1,6 @@
-﻿using SolrDotNet.Cloud.Connection;
+﻿using org.apache.zookeeper;
+using SolrDotNet.Cloud.Connection;
+using SolrDotNet.Cloud.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,19 +9,21 @@ using System.Threading.Tasks;
 
 namespace SolrDotNet.Cloud.ConnectionManager
 {
+    public record ZookeeperConnection(string Url, string ZkRoot, int ZooKeeperTimeoutMs);
     public class ZookeeperSolrCloudConnectionManager : ISolrCloudConnectionManager
     {
-        private const string ClusterState = "/clusterstate.json";
-        private const string CollectionState = "state.json";
-        private const string CollectionsZkNode = "/collections";
-        private const string LiveNodesZkNode = "/live_nodes";
+        private bool isDisposed;
+        private readonly System.Threading.SemaphoreSlim semaphoreSlim = new System.Threading.SemaphoreSlim(1, 1);
+        private readonly ZookeeperConnection _connection;
+        private ZooKeeper? _zooKeeper;
 
-        internal ZookeeperSolrCloudConnectionManager(string zooKeeperConnection, int zooKeeperTimeoutMs = 10_000)
+        internal ZookeeperSolrCloudConnectionManager(ZookeeperConnection connection)
         {
-            if (string.IsNullOrEmpty(zooKeeperConnection))
-                throw new ArgumentNullException(nameof(zooKeeperConnection));
-            if (zooKeeperTimeoutMs <= 0)
-                throw new ArgumentOutOfRangeException(nameof(zooKeeperTimeoutMs));
+            if (string.IsNullOrEmpty(connection.Url))
+                throw new ArgumentNullException(nameof(connection.Url));
+            if (connection.ZooKeeperTimeoutMs <= 0)
+                throw new ArgumentOutOfRangeException(nameof(connection.ZooKeeperTimeoutMs));
+            _connection = connection;
         }
 
         public Task ConnectAsync()
@@ -29,15 +33,44 @@ namespace SolrDotNet.Cloud.ConnectionManager
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            if (isDisposed)
+            {
+                return;
+            }
+
+            if (!isDisposed)
+            {
+                if (_zooKeeper is not null)
+                {
+                    AsyncHelper.RunSync(() => _zooKeeper.closeAsync());
+                }
+                isDisposed = true;
+            }
         }
 
-        public ValueTask DisposeAsync()
+        public async ValueTask DisposeAsync()
+        {
+            if (isDisposed)
+            {
+                return;
+            }
+
+            if (!isDisposed)
+            {
+                if (_zooKeeper is not null)
+                {
+                    await _zooKeeper.closeAsync().ConfigureAwait(false);
+                }
+                isDisposed = true;
+            }
+        }
+
+        public ISolrCloudConnection GetCloudConnection()
         {
             throw new NotImplementedException();
         }
 
-        public ISolrCloudConnection GetCloudConnection()
+        public ValueTask<bool> IsConnected()
         {
             throw new NotImplementedException();
         }

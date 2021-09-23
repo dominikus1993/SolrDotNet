@@ -11,7 +11,7 @@ namespace SolrDotNet.Cloud.ConnectionManager
     public interface ISolrCloudConnectionManager : IDisposable, IAsyncDisposable
     {
         ISolrCloudConnection GetCloudConnection();
-
         Task ConnectAsync();
+        ValueTask<bool> IsConnected();
     }
 }
