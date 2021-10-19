@@ -61,13 +61,13 @@ namespace SolrDotNet.Cloud.ConnectionManager
             }
         }
 
-        public override async Task process(WatchedEvent @event)
+        public override async Task process(WatchedEvent evt)
         {
-            if (@event.get_Type() != Event.EventType.None && !string.IsNullOrEmpty(@event.getPath()))
+            if (evt.get_Type() != Event.EventType.None && !string.IsNullOrEmpty(evt.getPath()))
             {
                 await SynchronizedUpdateAsync().ConfigureAwait(false);
             }
-            else if (@event.get_Type() == Event.EventType.None && @event.getState() == Event.KeeperState.Disconnected)
+            else if (evt.get_Type() == Event.EventType.None && evt.getState() == Event.KeeperState.Disconnected)
             {
                 await SynchronizedUpdateAsync(cleanZookeeperConnection: true).ConfigureAwait(false);
             }
