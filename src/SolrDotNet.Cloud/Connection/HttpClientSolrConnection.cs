@@ -39,12 +39,12 @@ namespace SolrDotNet.Cloud.Connection
             u.Path += relativeUrl;
             u.Query = GetQuery(parameters);
 
-            using var  response = await GetOrPost(u, parameters, cancellationToken).ConfigureAwait(false);
+            using var response = await GetOrPost(u, parameters, cancellationToken).ConfigureAwait(false);
  
             if (!response.IsSuccessStatusCode)
-                throw new SolrConnectionException(await response.Content.ReadAsStringAsync(cancellationToken), null, u.Uri.ToString());
+                throw new SolrConnectionException(await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false), null, u.Uri.ToString());
 
-            return await response.Content.ReadAsStreamAsync(cancellationToken);
+            return await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
         }
 
 
@@ -62,9 +62,9 @@ namespace SolrDotNet.Cloud.Connection
 
         public async Task<string> GetAsync(string relativeUrl, IEnumerable<KeyValuePair<string, string>>? parameters, CancellationToken cancellationToken = default)
         {
-            await using var responseStream = await GetAsStreamAsync(relativeUrl, parameters, cancellationToken);
+            await using var responseStream = await GetAsStreamAsync(relativeUrl, parameters, cancellationToken).ConfigureAwait(false);
             using var sr = new StreamReader(responseStream);
-            return await sr.ReadToEndAsync();
+            return await sr.ReadToEndAsync().ConfigureAwait(false);
         }
 
         public string Post(string relativeUrl, string s) => _syncFallbackConnection.Post(relativeUrl, s);
@@ -72,10 +72,10 @@ namespace SolrDotNet.Cloud.Connection
         public async Task<string> PostAsync(string relativeUrl, string s)
         {
             var bytes = Encoding.UTF8.GetBytes(s);
-            await using var content = new MemoryStream(bytes);
-            await using var responseStream = await PostStreamAsStreamAsync(relativeUrl, "text/xml; charset=utf-8", content, null, default);
+            await using MemoryStream content = new MemoryStream(bytes);
+            await using var responseStream = await PostStreamAsStreamAsync(relativeUrl, "text/xml; charset=utf-8", content, null, default).ConfigureAwait(false);
             using var sr = new StreamReader(responseStream);
-            return await sr.ReadToEndAsync();
+            return await sr.ReadToEndAsync().ConfigureAwait(false);
         }
 
         public string PostStream(string relativeUrl, string contentType, Stream content, IEnumerable<KeyValuePair<string, string>>? parameters) => _syncFallbackConnection.PostStream(relativeUrl, contentType, content, parameters);
@@ -91,19 +91,19 @@ namespace SolrDotNet.Cloud.Connection
             if (contentType != null)
                 sc.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(contentType);
 
-            using var response = await _client.PostAsync(u.Uri, sc, cancellationToken);
+            using var response = await _client.PostAsync(u.Uri, sc, cancellationToken).ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
-                throw new SolrConnectionException(await response.Content.ReadAsStringAsync(cancellationToken), null, u.Uri.ToString()); ;
+                throw new SolrConnectionException(await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false), null, u.Uri.ToString()); ;
 
-            return await response.Content.ReadAsStreamAsync(cancellationToken);
+            return await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<string> PostStreamAsync(string relativeUrl, string contentType, Stream content, IEnumerable<KeyValuePair<string, string>>? parameters)
         {
             await using var responseStream = await PostStreamAsStreamAsync(relativeUrl, contentType, content, parameters, CancellationToken.None);
             using var sr = new StreamReader(responseStream);
-            return await sr.ReadToEndAsync();
+            return await sr.ReadToEndAsync().ConfigureAwait(false);
         }
 
         private static string GetQuery(IEnumerable<KeyValuePair<string, string>>? parameters)
