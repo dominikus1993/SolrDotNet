@@ -42,18 +42,17 @@ internal class HttpClientSolrConnection : IStreamSolrConnection
     }
 
 
-    private Task<HttpResponseMessage> GetOrPost(UriBuilder u, IEnumerable<KeyValuePair<string, string>>? parameters, CancellationToken cancellationToken)
+    private async Task<HttpResponseMessage> GetOrPost(UriBuilder u, IEnumerable<KeyValuePair<string, string>>? parameters, CancellationToken cancellationToken)
     {
         if (UriValidatorHelper.UriLength(u) > MaxUriLength)
         {
             u.Query = null;
             parameters ??= Enumerable.Empty<KeyValuePair<string, string>>();
-            return _client.PostAsync(u.Uri, new FormUrlEncodedContent(parameters), cancellationToken);
+            using var form = new FormUrlEncodedContent(parameters);
+            return await _client.PostAsync(u.Uri, form, cancellationToken).ConfigureAwait(false);
         }
-        else
-        {
-            return _client.GetAsync(u.Uri, cancellationToken);
-        }
+
+        return await _client.GetAsync(u.Uri, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<string> GetAsync(string relativeUrl, IEnumerable<KeyValuePair<string, string>>? parameters, CancellationToken cancellationToken = default)
@@ -68,7 +67,7 @@ internal class HttpClientSolrConnection : IStreamSolrConnection
     public async Task<string> PostAsync(string relativeUrl, string s)
     {
         var bytes = Encoding.UTF8.GetBytes(s);
-        await using MemoryStream content = new MemoryStream(bytes);
+        await using var content = new MemoryStream(bytes);
         await using var responseStream = await PostStreamAsStreamAsync(relativeUrl, "text/xml; charset=utf-8", content, null, default).ConfigureAwait(false);
         using var sr = new StreamReader(responseStream);
         return await sr.ReadToEndAsync().ConfigureAwait(false);
@@ -107,7 +106,9 @@ internal class HttpClientSolrConnection : IStreamSolrConnection
     {
         var param = new List<KeyValuePair<string, string>>();
         if (parameters is not null)
+        {
             param.AddRange(parameters);
+        }
 
         param.Add(new KeyValuePair<string, string>("version", Version));
         param.Add(new KeyValuePair<string, string>("wt", "xml"));

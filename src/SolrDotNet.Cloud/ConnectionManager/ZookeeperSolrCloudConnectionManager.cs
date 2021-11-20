@@ -1,14 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using org.apache.zookeeper;
 using SolrDotNet.Cloud.Auth;
 using SolrDotNet.Cloud.Connection;
 using SolrDotNet.Cloud.Solr.Nodes;
 using SolrDotNet.Cloud.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SolrDotNet.Cloud.ConnectionManager
 {
@@ -16,19 +11,18 @@ namespace SolrDotNet.Cloud.ConnectionManager
     public class ZookeeperSolrCloudConnectionManager : Watcher, ISolrCloudConnectionManager
     {
         private bool isDisposed;
-        private readonly System.Threading.SemaphoreSlim semaphoreSlim = new System.Threading.SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
         private readonly ZookeeperConnection _connection;
         private ZooKeeper? _zooKeeper;
         private bool _isInitialized;
-        private ILogger<ZookeeperSolrCloudConnectionManager> _logger;
+        private readonly ILogger<ZookeeperSolrCloudConnectionManager> _logger;
         private List<SolrLiveNode> _liveNodes = new();
 
         internal ZookeeperSolrCloudConnectionManager(ZookeeperConnection connection, ILogger<ZookeeperSolrCloudConnectionManager> logger)
         {
-            if (string.IsNullOrEmpty(connection.Url))
-                throw new ArgumentNullException(nameof(connection.Url));
-            if (connection.ZooKeeperTimeoutMs <= 0)
-                throw new ArgumentOutOfRangeException(nameof(connection.ZooKeeperTimeoutMs));
+            ArgumentNullException.ThrowIfNull(connection.Url);
+            ArgumentNullException.ThrowIfNull(connection.ZooKeeperTimeoutMs);
+
             _connection = connection;
             _logger = logger;
         }
@@ -61,8 +55,13 @@ namespace SolrDotNet.Cloud.ConnectionManager
             }
         }
 
-        public override async Task process(WatchedEvent evt)
+        public override async Task process(WatchedEvent? evt)
         {
+            if (evt is null)
+            {
+                return;
+            }
+
             if (evt.get_Type() != Event.EventType.None && !string.IsNullOrEmpty(evt.getPath()))
             {
                 await SynchronizedUpdateAsync().ConfigureAwait(false);
@@ -75,7 +74,6 @@ namespace SolrDotNet.Cloud.ConnectionManager
 
         private async Task SynchronizedUpdateAsync(bool cleanZookeeperConnection = false)
         {
-
             await semaphoreSlim.WaitAsync().ConfigureAwait(false);
             try
             {
@@ -85,7 +83,6 @@ namespace SolrDotNet.Cloud.ConnectionManager
             {
                 semaphoreSlim.Release();
             }
-
         }
 
         private async Task UpdateAsync(bool cleanZookeeperConnection = false)
@@ -166,6 +163,8 @@ namespace SolrDotNet.Cloud.ConnectionManager
                 }
                 isDisposed = true;
             }
+
+            await ((IAsyncDisposable)semaphoreSlim).DisposeAsync().ConfigureAwait(false);
         }
 
         public ISolrCloudConnection GetCloudConnection()
