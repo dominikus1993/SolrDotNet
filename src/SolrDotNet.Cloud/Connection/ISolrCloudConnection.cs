@@ -1,14 +1,8 @@
-﻿using SolrDotNet.Cloud.SolrRouter;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SolrDotNet.Cloud.SolrRouter;
 
-namespace SolrDotNet.Cloud.Connection
+namespace SolrDotNet.Cloud.Connection;
+
+public interface ISolrCloudConnection
 {
-    public interface ISolrCloudConnection
-    {
-        ISolrCloudRouter GetRouter();
-    }
+    ISolrCloudRouter GetRouter();
 }

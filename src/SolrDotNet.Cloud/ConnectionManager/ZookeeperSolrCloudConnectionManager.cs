@@ -126,7 +126,7 @@ namespace SolrDotNet.Cloud.ConnectionManager
             }
             catch (KeeperException ex)
             {
-                _logger.LogWarning(ex, "Can't download live nodes");             
+                _logger.LogWarning(ex, "Can't download live nodes");
             }
             return new List<SolrLiveNode>();
         }
