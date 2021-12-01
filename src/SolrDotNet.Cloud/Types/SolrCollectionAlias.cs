@@ -1,4 +1,4 @@
-﻿using SolrDotNet.Cloud.Solr.Nodes;
+using SolrDotNet.Cloud.Solr.Nodes;
 using SolrDotNet.Cloud.Utils;
 using System;
 using System.Collections.Generic;
@@ -22,13 +22,13 @@ namespace SolrDotNet.Cloud.Types
 
         public string? GetUrl()
         {
-            var node = _urls.Count switch
+            return _urls.Count switch
             {
                 0 => throw new Exception("No Alive Node"),
                 1 => _urls[0],
-                int count => _urls[random.Next(0, count)]
+                int count => _urls[random.Next(0, count)],
+                _ => throw new NotImplementedException(),
             };
-            return node;
         }
     }
 }
