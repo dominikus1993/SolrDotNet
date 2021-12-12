@@ -5,7 +5,13 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Library.fs" />
+    <Compile Include="Utils.fs" />
   </ItemGroup>
+
+  <ItemGroup>
+   <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+     <_Parameter1>SolrDotNet.Cloud.Tests</_Parameter1>
+   </AssemblyAttribute>
+ </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>
