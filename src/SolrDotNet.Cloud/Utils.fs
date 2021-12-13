@@ -45,3 +45,23 @@ module internal Zookeeper =
     let getClusterStateUrlPath(root) = getUrlWitRootOrDefault(root, ClusterState);
 
     let getCollectionsStateUrlPath() = CollectionState;
+
+module internal SolrLiveNodesParser =
+    open SolrDotNet.Cloud
+    open System
+
+    let private filterNodes (node: struct (string * string array)) =
+        let struct (_, addressAndSuffix) = node
+        addressAndSuffix.Length = 2 && addressAndSuffix[1] = "solr"
+
+    let private mapLiveNode (node: struct (string * string array)): SolrLiveNode =
+        let struct (node, addressAndSuffix) = node
+        { Name = node; Url = $"http://{addressAndSuffix[0]}/solr"}
+
+    let private parseNodes(nodes: string array) =
+        nodes
+            |> Array.map(fun node -> struct (node, node.Split("_")))
+            |> Array.filter(filterNodes)
+            |> Array.map(mapLiveNode)
+
+    let parse(nodes: string array option): SolrLiveNode array option = nodes |> Option.map(parseNodes)

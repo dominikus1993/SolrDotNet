@@ -1,5 +1,7 @@
 namespace SolrDotNet.Cloud.Types
 open System
+open SolrDotNet.Cloud.Utils
+open SolrDotNet.Cloud
 
 type internal ISolrCollection =
     abstract member GetUrl: unit -> string option
@@ -8,7 +10,7 @@ type internal ISolrCollection =
 
 type SolrAlias(name: string, liveNodes: string array option) =
     let random = Random()
-    let urls = liveNodes |> Option.filter(fun x -> x.Length > 0) |> Option.map(fun x -> x)
+    let urls = liveNodes |> Option.filter(fun x -> x.Length > 0) |> SolrLiveNodesParser.parse |> Option.map(fun nodes -> nodes |> Array.map(SolrLiveNode.getAliasUrl name))
 
     member private _.getUrl(x: string array) =
             match x.Length with

@@ -5,6 +5,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Solr.fs" />
     <Compile Include="Utils.fs" />
     <Compile Include="Types.fs" />
   </ItemGroup>
