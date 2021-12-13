@@ -1,4 +1,4 @@
-namespace SolrDotNet.Cloud.Utls
+namespace SolrDotNet.Cloud.Utils
 
 module internal Url =
     open System

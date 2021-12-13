@@ -3,7 +3,7 @@ module UtilsTests
 open System
 open Xunit
 open FsUnit.Xunit
-open SolrDotNet.Cloud.Utls
+open SolrDotNet.Cloud.Utils
 
 
 [<Theory>]
