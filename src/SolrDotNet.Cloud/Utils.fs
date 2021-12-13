@@ -64,4 +64,5 @@ module internal SolrLiveNodesParser =
             |> Array.filter(filterNodes)
             |> Array.map(mapLiveNode)
 
-    let parse(nodes: string array option): SolrLiveNode array option = nodes |> Option.map(parseNodes)
+    let parse(nodes: string array option): SolrLiveNode array option =
+        nodes |> Option.filter(fun x -> x.Length > 0) |> Option.map(parseNodes)

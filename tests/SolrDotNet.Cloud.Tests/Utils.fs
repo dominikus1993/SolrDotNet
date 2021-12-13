@@ -3,6 +3,7 @@ module UtilsTests
 open System
 open Xunit
 open FsUnit.Xunit
+open SolrDotNet.Cloud
 open SolrDotNet.Cloud.Utils
 
 
@@ -33,3 +34,33 @@ let ``ZookeeperCollectionsUrlTests`` (root, expected: string) =
 let ``ZookeeperLiveNodesUrlTests`` (root, expected: string) =
     let subject = Zookeeper.getLiveNodesUrlPath(root)
     subject |> should equal expected
+
+
+[<Fact>]
+let ``ParseLiveNodesTest`` () =
+    let nodes = [| "172.18.0.3:8983_solr" |]
+    let subject = SolrLiveNodesParser.parse(Some(nodes))
+    subject.IsSome |> should be True
+    subject.Value |> should not' (be Empty)
+    subject.Value |> should haveLength 1
+    let node = subject.Value[0]
+    node |> should equal ({Name = "172.18.0.3:8983_solr"; Url = "http://172.18.0.3:8983/solr"})
+
+[<Fact>]
+let ``ParseLiveNodesTestWhenListIsEmpty`` () =
+    let nodes = Array.empty
+    let subject = SolrLiveNodesParser.parse(Some(nodes))
+    subject.IsNone |> should be True
+
+[<Fact>]
+let ``GetAliasUrlFromNodeTests`` () =
+    let nodes = [| "172.18.0.3:8983_solr" |]
+    let subject = SolrLiveNodesParser.parse(Some(nodes))
+    subject.IsSome |> should be True
+    subject.Value |> should not' (be Empty)
+    subject.Value |> should haveLength 1
+    let node = subject.Value[0]
+    node |> should equal ({Name = "172.18.0.3:8983_solr"; Url = "http://172.18.0.3:8983/solr"})
+    let alias = "xd"
+    let aliasUrl = node |> SolrLiveNode.getAliasUrl alias
+    aliasUrl |> should equal "http://172.18.0.3:8983/solr/xd"
