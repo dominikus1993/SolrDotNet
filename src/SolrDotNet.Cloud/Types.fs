@@ -9,7 +9,7 @@ type internal ISolrCollection =
     abstract member Name: string with get
 
 
-type SolrAlias(name: string, liveNodes: string array option) =
+type internal SolrAlias(name: string, liveNodes: string array option) =
     let random = Random()
     let urls = liveNodes |> Option.filter(fun x -> x.Length > 0) |> SolrLiveNodesParser.parse |> Option.map(fun nodes -> nodes |> Array.map(SolrLiveNode.getAliasUrl name))
 
@@ -24,7 +24,7 @@ type SolrAlias(name: string, liveNodes: string array option) =
 
         member this.GetUrl() = urls |> Option.bind(this.getUrl)
 
-type SolrCollection(name: string, shards: IReadOnlyDictionary<string, SolrCloudShard>) =
+type internal SolrCollection(name: string, shards: IReadOnlyDictionary<string, SolrCloudShard>) =
     let random = Random()
     let activeReplicas = shards.Values
                             |> Seq.filter(fun n -> n.IsActive)
