@@ -43,3 +43,21 @@ type internal SolrCollection(name: string, shards: IReadOnlyDictionary<string, S
         member _.Name with get() = name
 
         member this.GetUrl() = this.getUrl(activeReplicas) |> Option.map(fun x -> x.Url)
+
+module internal SolrCollectionRouter =
+    type internal T = { Collections: Map<string, ISolrCollection>}
+
+    let empty = { Collections = Map.empty }
+
+    let add(collection: ISolrCollection) (solr: T) =
+        { solr with Collections = Map.add collection.Name collection solr.Collections}
+
+    let hasAnyCollections (solr: T) = not solr.Collections.IsEmpty
+
+    let getCollectionUrl (name: string) (solr: T) =
+        if solr.Collections.ContainsKey(name) then
+            solr.Collections[name].GetUrl()
+        else
+            None
+
+
