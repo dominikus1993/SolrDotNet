@@ -8,6 +8,7 @@
     <Compile Include="Solr.fs" />
     <Compile Include="Utils.fs" />
     <Compile Include="Types.fs" />
+    <Compile Include="Connection.fs" />
   </ItemGroup>
 
   <ItemGroup>

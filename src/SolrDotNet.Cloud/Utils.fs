@@ -16,6 +16,15 @@ module internal Url =
             u.Query.Length +
             u.Fragment.Length
 
+module internal TaskHelper =
+    open System.Threading.Tasks
+    open System.Threading
+    let taskFactory = TaskFactory(CancellationToken.None, TaskCreationOptions.None, TaskContinuationOptions.None, TaskScheduler.Default)
+
+    let runSyncT<'T>(f: unit -> Task<'T>) = taskFactory.StartNew(f).Unwrap().GetAwaiter().GetResult()
+
+    let runSync(f: unit -> Task) = taskFactory.StartNew(f).Unwrap().GetAwaiter().GetResult()
+
 module internal Zookeeper =
     open System
 
