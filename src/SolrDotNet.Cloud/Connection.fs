@@ -1,4 +1,5 @@
 ﻿namespace SolrDotNet.Cloud
+
 open SolrDotNet.Cloud.Types
 open System
 open System.Threading.Tasks
@@ -7,14 +8,16 @@ type ISolrCloudState =
     interface
     end
 
-type internal SolrCloudState(router: SolrCollectionRouter.T) = class end
+type internal SolrCloudState(router: SolrCollectionRouter.T) =
+    class
+    end
 
 type ISolrCloudConnection =
     inherit IAsyncDisposable
     inherit IDisposable
-    abstract member GetState: unit -> ISolrCloudState
-    abstract member Key: string with get
-    abstract member Init: unit -> Task
+    abstract member GetState : unit -> ISolrCloudState
+    abstract member Key : string
+    abstract member Init : unit -> Task
 
 module internal SolrAlias =
     open org.apache.zookeeper
@@ -22,11 +25,18 @@ module internal SolrAlias =
     open Newtonsoft.Json
     open System.Text
 
-    let loadAliases (z: ZooKeeper)(root: string) =
+    let loadAliases (z: ZooKeeper) (root: string) =
         task {
-            let! aliasesJson = z.getDataAsync(Zookeeper.getAliasesUrlPath(root), true)
-            if isNull aliasesJson.Data then
-                return None
-            else
-                return Some(JsonConvert.DeserializeObject<SolrAliases>(Encoding.UTF8.GetString(aliasesJson.Data)))
+            let! aliasesJson = z.getDataAsync (Zookeeper.getAliasesUrlPath (root), true)
+
+            return
+                aliasesJson
+                |> Option.ofObj
+                |> Option.bind (fun json -> json.Data |> Option.ofObj)
+                |> Option.map(fun data -> JsonConvert.DeserializeObject<SolrAliases>(Encoding.UTF8.GetString(data)))
         }
+
+
+type ZooKeeperSolrCloudConnection() =
+    class
+    end
