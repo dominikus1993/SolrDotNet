@@ -1,5 +1,13 @@
 namespace SolrDotNet.Cloud.Utils
 
+open System.Linq
+
+module internal List =
+    let toList(s: _ list) = s.ToList()
+
+module internal Enumerable =
+    let toList(s: _ seq) = s.ToList()
+
 module internal Url =
     open System
 
