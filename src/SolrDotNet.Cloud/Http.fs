@@ -11,6 +11,7 @@ open System.Net;
 open System.Text;
 open SolrNet.Exceptions
 open SolrDotNet.Cloud.Utils
+open System.Threading
     // private const string Version = "2.2";
     // public const string HttpClientSolrConnectionClient = nameof(HttpClientSolrConnectionClient);
     // private readonly HttpClient _client;
@@ -79,6 +80,24 @@ type HttpClientSolrConnection internal(url: string, httpClient: HttpClient) =
                 return! sr.ReadToEndAsync();
             }
 
+        member _.PostStream(relativeUrl, contentType, content, parameters) = syncFallbackConenction.PostStream(relativeUrl, contentType, content, parameters)
+
         member _.Post(relativeUrl, s) = syncFallbackConenction.Post(relativeUrl, s);
 
+        member _.PostAsync(relativeUrl, s) =
+            task {
+                let bytes = Encoding.UTF8.GetBytes(s);
+                use content = new MemoryStream(bytes);
+                use! responseStream = postStreamAsStreamAsync(relativeUrl, "text/xml; charset=utf-8", content, null, CancellationToken.None );
+                use sr = new StreamReader(responseStream);
+                return! sr.ReadToEndAsync();
+         }
+
         member _.PostStreamAsStreamAsync(relativeUrl, contentType, content,  parameters, cancellationToken) = postStreamAsStreamAsync(relativeUrl,contentType, content, parameters, cancellationToken)
+
+        member _.PostStreamAsync(relativeUrl, contentType, content, parameters) =
+            task {
+                use! responseStream = postStreamAsStreamAsync(relativeUrl, contentType, content, parameters, CancellationToken.None);
+                use sr = new StreamReader(responseStream);
+                return! sr.ReadToEndAsync();
+         }
