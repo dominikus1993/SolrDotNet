@@ -24,7 +24,7 @@ type HttpClientSolrConnection internal(url: string, httpClient: HttpClient) =
     let MaxUriLength = 7600
     let syncFallbackConenction = PostSolrConnection(SolrConnection(url), url)
 
-    let GetQuery(parameters: KeyValuePair<string, string> seq) =
+    let getQuery(parameters: KeyValuePair<string, string> seq) =
         let param = ResizeArray<KeyValuePair<string, string>>();
         if isNull parameters then
             param.AddRange(parameters);
@@ -32,7 +32,7 @@ type HttpClientSolrConnection internal(url: string, httpClient: HttpClient) =
         param.Add(new KeyValuePair<string, string>("wt", "xml"));
         String.Join("&", param |> Seq.map(fun kv -> $"{WebUtility.UrlEncode(kv.Key)}={WebUtility.UrlEncode(kv.Value)}"));
 
-    let GetOrPost(u: UriBuilder, parameters, cancellationToken) =
+    let getOrPost(u: UriBuilder, parameters, cancellationToken) =
          if (Url.length(u) > MaxUriLength) then
             u.Query <- null;
             let p = if isNull parameters then Enumerable.Empty<KeyValuePair<string, string>>() else parameters
@@ -40,19 +40,45 @@ type HttpClientSolrConnection internal(url: string, httpClient: HttpClient) =
          else
             httpClient.GetAsync(u.Uri, cancellationToken);
 
+    let getAsStreamAsync(relativeUrl, parameters, cancellationToken) =
+        task {
+            let u = new UriBuilder(url);
+            u.Path <- u.Path + relativeUrl;
+            u.Query <- getQuery(parameters);
+            use! response = getOrPost(u, parameters, cancellationToken).ConfigureAwait(false);
+            if not response.IsSuccessStatusCode then
+                let! resp = response.Content.ReadAsStringAsync(cancellationToken)
+                raise (SolrConnectionException(resp, null, u.Uri.ToString()))
+            return! response.Content.ReadAsStreamAsync(cancellationToken);
+        }
+
+    let postStreamAsStreamAsync(relativeUrl, contentType, content,  parameters, cancellationToken) =
+        task {
+            let u = UriBuilder(url);
+            u.Path <- u.Path + relativeUrl;
+            u.Query <- getQuery(parameters);
+            use sc = new StreamContent(content);
+            if not (isNull content) then
+                sc.Headers.ContentType <- System.Net.Http.Headers.MediaTypeHeaderValue.Parse(contentType);
+            use! response =  httpClient.PostAsync(u.Uri, sc, cancellationToken);
+            if not response.IsSuccessStatusCode then
+                let! res = response.Content.ReadAsStringAsync(cancellationToken)
+                raise (SolrConnectionException(res, null, u.Uri.ToString()))
+            return! response.Content.ReadAsStreamAsync(cancellationToken);
+        }
 
     interface IStreamSolrConnection with
         member _.Get(relativeUrl, parameters) = syncFallbackConenction.Get(relativeUrl, parameters)
 
-        member _.GetAsStreamAsync(relativeUrl, parameters, cancellationToken) =
+        member this.GetAsStreamAsync(relativeUrl, parameters, cancellationToken) = getAsStreamAsync(relativeUrl, parameters, cancellationToken)
+
+        member this.GetAsync(relativeUrl, parameters, cancellationToken) =
             task {
-                let u = new UriBuilder(url);
-                u.Path <- u.Path + relativeUrl;
-                u.Query <- GetQuery(parameters);
-                use! response = GetOrPost(u, parameters, cancellationToken).ConfigureAwait(false);
-                if not response.IsSuccessStatusCode then
-                    let! resp = response.Content.ReadAsStringAsync(cancellationToken)
-                    raise (SolrConnectionException(resp, null, u.Uri.ToString()))
-                return! response.Content.ReadAsStreamAsync(cancellationToken);
+                use! responseStream =  getAsStreamAsync(relativeUrl, parameters, cancellationToken)
+                use sr = new StreamReader(responseStream);
+                return! sr.ReadToEndAsync();
             }
 
+        member _.Post(relativeUrl, s) = syncFallbackConenction.Post(relativeUrl, s);
+
+        member _.PostStreamAsStreamAsync(relativeUrl, contentType, content,  parameters, cancellationToken) = postStreamAsStreamAsync(relativeUrl,contentType, content, parameters, cancellationToken)
