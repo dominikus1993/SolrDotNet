@@ -61,6 +61,8 @@ module internal Zookeeper =
 
     let getClusterStateUrlPath(root) = getUrlWitRootOrDefault(root, ClusterState);
 
+    let getCollectionPath(root)(collectionName) = $"{getCollectionsUrlPath(root)}/{collectionName}/{CollectionState}";
+
     let getCollectionsStateUrlPath() = CollectionState;
 
 module internal SolrLiveNodesParser =
@@ -83,3 +85,15 @@ module internal SolrLiveNodesParser =
 
     let parse(nodes: string array option): SolrLiveNode array option =
         nodes |> Option.filter(fun x -> x.Length > 0) |> Option.map(parseNodes)
+
+module internal Option =
+    open System.Threading.Tasks
+    let mapTask<'a, 'b>(map: 'a -> 'b Task) (option: Option<'a>): Option<'b> Task =
+        task {
+            match option with
+            | Some(x) ->
+                let! res = map(x)
+                return Some(res)
+            | None ->
+                return None
+        }
