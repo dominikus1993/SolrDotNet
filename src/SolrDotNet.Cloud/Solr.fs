@@ -18,3 +18,6 @@ type SolrAliases = { [<JsonProperty("collection")>]Collection: Dictionary<string
 
 module SolrAliases =
     let isEmpty (a: SolrAliases) = a.Collection.Count = 0
+
+module SolrCloudShard =
+    let fromJson json liveNodes = 2
