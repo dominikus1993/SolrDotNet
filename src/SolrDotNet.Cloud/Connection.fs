@@ -63,10 +63,20 @@ module internal LiveNodes =
             return SolrLiveNodesParser.parse (children)
         }
 
-module SolrCollections =
+module internal SolrCollections =
+    open org.apache.zookeeper
+    let loadCollectionState (z: ZookeeperSolrCloudConnection) (root: string) (collectionName: string) =
+        task {
+            try
+                let! result = z.Zookeeper.getDataAsync(Zookeeper.getCollectionPath(root)(collectionName), true)
+                return Some(result)
+            with
+            | :? KeeperException ->
+                return None
+        }
     let map (z: ZookeeperSolrCloudConnection) (root: string) (data: string seq) =
         task {
-            return 1
+            return 2
         }
 
     let load (z: ZookeeperSolrCloudConnection) (root: string) =
@@ -80,9 +90,7 @@ module SolrCollections =
                     |> Option.map(fun x -> x.Children)
                     |> Option.filter(fun x -> x.Count > 0)
                     |> Option.mapTask(map(z)(root))
-
-
-
+            return 2
         }
 
 type ZooKeeperSolrCloudConnection() =
