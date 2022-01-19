@@ -2,6 +2,7 @@ namespace SolrDotNet.Cloud
 open System
 open System.Collections.Generic
 open Newtonsoft.Json
+open Newtonsoft.Json.Linq
 
 type internal SolrLiveNode = { Name: string; Url: string }
 
@@ -19,5 +20,10 @@ type SolrAliases = { [<JsonProperty("collection")>]Collection: Dictionary<string
 module SolrAliases =
     let isEmpty (a: SolrAliases) = a.Collection.Count = 0
 
+module internal SolrCloudReplica =
+    let parse (collection: string) (json: JProperty) (liveNodes: SolrLiveNode array) =
+        
+
 module SolrCloudShard =
     let fromJson json liveNodes = 2
+

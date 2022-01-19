@@ -3,6 +3,7 @@ open System
 open SolrDotNet.Cloud.Utils
 open SolrDotNet.Cloud
 open System.Collections.Generic
+open Newtonsoft.Json.Linq
 
 type internal ISolrCollection =
     abstract member GetUrl: unit -> string option
@@ -44,6 +45,10 @@ type internal SolrCollection(name: string, shards: IReadOnlyDictionary<string, S
 
         member this.GetUrl() = this.getUrl(activeReplicas) |> Option.map(fun x -> x.Url)
 
+module internal SolrCollection =
+    let parse (json: JProperty) (nodes) =
+        2
+
 module internal SolrCollectionRouter =
     type internal T = { Collections: Map<string, ISolrCollection>}
 
@@ -59,5 +64,7 @@ module internal SolrCollectionRouter =
             solr.Collections[name].GetUrl()
         else
             None
+
+     
 
 
