@@ -17,6 +17,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		RELEASE_NOTES.md = RELEASE_NOTES.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{29E696D9-F3AE-4B14-8C5F-68AA4D3DC56F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrDotNet.Cloud", "src\SolrDotNet.Cloud\SolrDotNet.Cloud.csproj", "{07E6D1E9-C92F-43A1-B170-71C3707CF296}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrDotNet.Cloud.AspNetCore", "src\SolrDotNet.Cloud.AspNetCore\SolrDotNet.Cloud.AspNetCore.csproj", "{2E55E75B-19B7-4F2C-9F30-1C6ED1043D36}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,11 +43,23 @@ Global
 		{F7035FC5-8658-42AC-9317-749CC089C262}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AD88EB36-E919-4948-855E-2223B5826AA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AD88EB36-E919-4948-855E-2223B5826AA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07E6D1E9-C92F-43A1-B170-71C3707CF296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07E6D1E9-C92F-43A1-B170-71C3707CF296}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07E6D1E9-C92F-43A1-B170-71C3707CF296}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07E6D1E9-C92F-43A1-B170-71C3707CF296}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E55E75B-19B7-4F2C-9F30-1C6ED1043D36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E55E75B-19B7-4F2C-9F30-1C6ED1043D36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E55E75B-19B7-4F2C-9F30-1C6ED1043D36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E55E75B-19B7-4F2C-9F30-1C6ED1043D36}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B99E6BB8-642A-4A68-86DF-69567CBA700A}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{07E6D1E9-C92F-43A1-B170-71C3707CF296} = {29E696D9-F3AE-4B14-8C5F-68AA4D3DC56F}
+		{2E55E75B-19B7-4F2C-9F30-1C6ED1043D36} = {29E696D9-F3AE-4B14-8C5F-68AA4D3DC56F}
 	EndGlobalSection
 EndGlobal
