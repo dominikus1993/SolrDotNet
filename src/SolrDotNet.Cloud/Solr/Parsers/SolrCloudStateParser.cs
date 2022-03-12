@@ -2,6 +2,8 @@ using System.Runtime.CompilerServices;
 
 using Newtonsoft.Json.Linq;
 
+using SolrDotNet.Cloud.Exceptions;
+
 namespace SolrDotNet.Cloud.Solr.Parsers;
 
 /// <summary>
@@ -28,6 +30,8 @@ public static class SolrCloudStateParser
     private static SolrCloudCollection BuildCollection(JProperty json, IReadOnlyCollection<string> liveNodes)
     {
         JObject? shards = json.Value["shards"] as JObject;
+        if (shards == null)
+            throw new SolrCloudStateParserException("shards is not found");
         return new SolrCloudCollection(
             json.Name,
             BuildRouter(json.Value["router"] as JObject),

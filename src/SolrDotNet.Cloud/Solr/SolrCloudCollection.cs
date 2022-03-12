@@ -24,12 +24,10 @@ public class SolrCloudCollection
     /// <summary>
     /// Constructor
     /// </summary>
-    public SolrCloudCollection(string name, SolrCloudRouter router, IReadOnlyDictionary<string, SolrCloudShard> shards)
+    public SolrCloudCollection(string name, SolrCloudRouter? router, IReadOnlyDictionary<string, SolrCloudShard>? shards)
     {
-        if (router == null)
-            throw new ArgumentNullException("router");
-        if (shards == null)
-            throw new ArgumentNullException("shards");
+        ArgumentNullException.ThrowIfNull(router, nameof(router));
+        ArgumentNullException.ThrowIfNull(shards, nameof(shards));
         Name = name;
         Router = router;
         Shards = shards;
