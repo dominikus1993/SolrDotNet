@@ -36,73 +36,85 @@ namespace SolrDotNet.Cloud.Operations;
         /// <inheritdoc />
         public ResponseHeader Ping()
         {
-            return PerformOperation(operations => operations.Ping());
+            var operations = base.GetOperations<T>();
+            return  operations.Ping();
         }
 
         /// <inheritdoc />
         public SolrSchema GetSchema(string schemaFileName)
         {
-            return PerformOperation(operations => operations.GetSchema(schemaFileName));
+            var operations = base.GetOperations<T>();
+            return operations.GetSchema(schemaFileName);
         }
 
         /// <inheritdoc />
         public SolrDIHStatus GetDIHStatus(KeyValuePair<string, string> options)
         {
-            return PerformOperation(operations => operations.GetDIHStatus(options));
+            var operations = base.GetOperations<T>();
+            return operations.GetDIHStatus(options);
         }
 
         /// <inheritdoc />
         public SolrQueryResults<T> Query(string q)
         {
-            return PerformOperation(operations => operations.Query(q));
+            var operations = base.GetOperations<T>();
+            return operations.Query(q);
         }
 
         /// <inheritdoc />
         public SolrQueryResults<T> Query(string q, ICollection<SortOrder> orders)
         {
-            return PerformOperation(operations => operations.Query(q, orders));
+            var operations = base.GetOperations<T>();
+            return operations.Query(q, orders);
         }
 
         /// <inheritdoc />
         public SolrQueryResults<T> Query(string q, QueryOptions options)
         {
-            return PerformOperation(operations => operations.Query(q, options));
+            var operations = base.GetOperations<T>();
+            return operations.Query(q, options);
         }
 
         /// <inheritdoc />
         public SolrQueryResults<T> Query(ISolrQuery q)
         {
-            return PerformOperation(operations => operations.Query(q));
+            var operations = base.GetOperations<T>();
+            return operations.Query(q);
         }
 
         /// <inheritdoc />
         public SolrQueryResults<T> Query(ISolrQuery query, ICollection<SortOrder> orders)
         {
-            return PerformOperation(operations => operations.Query(query, orders));
+            var operations = base.GetOperations<T>();
+            return operations.Query(query, orders);
         }
 
         /// <inheritdoc />
         public ICollection<KeyValuePair<string, int>> FacetFieldQuery(SolrFacetFieldQuery facets)
         {
-            return PerformOperation(operations => operations.FacetFieldQuery(facets));
+            var operations = base.GetOperations<T>();
+            return operations.FacetFieldQuery(facets);
         }
 
         /// <inheritdoc />
         public ResponseHeader Commit()
         {
-            return PerformOperation(operations => operations.Commit(), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.Commit();
         }
 
         /// <inheritdoc />
         public ResponseHeader Rollback()
         {
-            return PerformOperation(operations => operations.Commit(), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.Commit();
         }
 
         /// <inheritdoc />
         public ResponseHeader Optimize()
         {
-            return PerformOperation(operations => operations.Commit(), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.Commit();
         }
 
         /// <inheritdoc />

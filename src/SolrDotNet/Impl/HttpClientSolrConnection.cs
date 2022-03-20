@@ -38,15 +38,16 @@ public class HttpClientSolrConnection : IStreamSolrConnection
     /// <inheritdoc />
     public async Task<Stream> GetAsStreamAsync(string relativeUrl, IEnumerable<KeyValuePair<string, string>> parameters, CancellationToken cancellationToken)
     {
+        var parameterList = parameters?.ToList();
         var u = new UriBuilder(_baseUrl);
         u.Path += relativeUrl;
-        u.Query = GetQuery(parameters);
+        u.Query = GetQuery(parameterList);
 
         HttpResponseMessage response;
         if (u.UriLength() > MaxUriLength)
         {
             u.Query = null;
-            response = await _client.PostAsync(u.Uri, new FormUrlEncodedContent(parameters), cancellationToken);
+            response = await _client.PostAsync(u.Uri, new FormUrlEncodedContent(parameterList), cancellationToken);
         }
         else
             response = await _client.GetAsync(u.Uri, cancellationToken);
@@ -88,7 +89,7 @@ public class HttpClientSolrConnection : IStreamSolrConnection
     {
         var u = new UriBuilder(_baseUrl);
         u.Path += relativeUrl;
-        u.Query = GetQuery(getParameters);
+        u.Query = GetQuery(getParameters?.ToList());
 
         using var sc = new StreamContent(content);
         if (contentType != null)
@@ -102,16 +103,16 @@ public class HttpClientSolrConnection : IStreamSolrConnection
     }
 
 
-    private static string GetQuery(IEnumerable<KeyValuePair<string, string>>? parameters)
+    private static string GetQuery(IList<KeyValuePair<string, string>>? parameters)
     {
-        var param = new List<KeyValuePair<string, string>>();
+        var param = new List<string>();
         if (parameters is not null)
-            param.AddRange(parameters);
+            param.AddRange(parameters.Select(kv => $"{WebUtility.UrlEncode(kv.Key)}={WebUtility.UrlEncode(kv.Value)}"));
 
-        param.Add(new KeyValuePair<string, string>("version", Version));
-        param.Add(new KeyValuePair<string, string>("wt", "xml"));
+        param.Add($"version={Version}");
+        param.Add("wt=xml");
 
-        return string.Join("&", param.Select(kv => $"{WebUtility.UrlEncode(kv.Key)}={WebUtility.UrlEncode(kv.Value)}"));
+        return string.Join("&", param);
 
     }
 }

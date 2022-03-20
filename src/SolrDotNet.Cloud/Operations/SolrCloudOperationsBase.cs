@@ -45,25 +45,6 @@ namespace SolrDotNet.Cloud.Operations;
         {
             this.collectionName = collectionName;
         }
-
-        /// <summary>
-        /// Performs basic operation
-        /// </summary>
-        protected TResult PerformBasicOperation<TResult>(Func<ISolrBasicOperations<T>, TResult> operation, bool leader = false)
-        {
-            var collection = GetCollection(collectionName);
-            var url = collection.GetUrl(leader);
-            if (url is null)
-            {
-                throw new ValueIsNullException("Url is null");
-            }
-            var operations = operationsProvider.GetBasicOperations<T>(
-                url.AbsoluteUri,
-                isPostConnection);
-            if (operations == null)
-                throw new ApplicationException("Operations provider returned null.");
-            return operation(operations);
-        }
         
         /// <summary>
         /// Performs basic operation
@@ -101,24 +82,7 @@ namespace SolrDotNet.Cloud.Operations;
                 throw new ApplicationException("Operations provider returned null.");
             return operations;
         }
-
-        /// <summary>
-        /// Perform operation
-        /// </summary>
-        protected TResult PerformOperation<TResult>(Func<ISolrOperations<T>, TResult> operation, bool leader = false) {
-            var collection = GetCollection(collectionName);
-            var url = collection.GetUrl(leader);
-            if (url is null)
-            {
-                throw new ValueIsNullException("Url is null");
-            }
-            var operations = operationsProvider.GetOperations<T>(
-                url.AbsoluteUri,
-                isPostConnection);
-            if (operations == null)
-                throw new ApplicationException("Operations provider returned null.");
-            return operation(operations);
-        }
+        
 
         /// <summary>
         /// Returns collection of replicas
