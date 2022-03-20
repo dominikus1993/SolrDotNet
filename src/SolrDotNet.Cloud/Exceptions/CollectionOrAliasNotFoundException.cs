@@ -3,6 +3,7 @@ namespace SolrDotNet.Cloud.Exceptions;
 public class CollectionOrAliasNotFoundException : Exception
 {
     public string CollectionName { get; }
+
     public CollectionOrAliasNotFoundException(string collectionName) : base()
     {
         CollectionName = collectionName;
@@ -13,7 +14,11 @@ public class CollectionOrAliasNotFoundException : Exception
         CollectionName = collectionName;
     }
 
-    public CollectionOrAliasNotFoundException(string? message, Exception? innerException, string collectionName) : base(message, innerException) { CollectionName = collectionName; }
+    public CollectionOrAliasNotFoundException(string? message, Exception? innerException, string collectionName) :
+        base(message, innerException)
+    {
+        CollectionName = collectionName;
+    }
 
     public override string ToString()
     {

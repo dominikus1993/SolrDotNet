@@ -11,16 +11,20 @@ internal static class ZookeeperUrlProvider
     private const string AliasesZkNode = "aliases.json";
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string GetLiveNodesUrlPath(string? root) => string.IsNullOrEmpty(root) ? $"/{LiveNodesZkNode}" : $"/{root}/{LiveNodesZkNode}";
+    public static string GetLiveNodesUrlPath(string? root) =>
+        string.IsNullOrEmpty(root) ? $"/{LiveNodesZkNode}" : $"/{root}/{LiveNodesZkNode}";
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string GetAliasesUrlPath(string? root) => string.IsNullOrEmpty(root) ? $"/{AliasesZkNode}" : $"/{root}/{AliasesZkNode}";
+    public static string GetAliasesUrlPath(string? root) =>
+        string.IsNullOrEmpty(root) ? $"/{AliasesZkNode}" : $"/{root}/{AliasesZkNode}";
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string GetCollectionsUrlPath(string? root) => string.IsNullOrEmpty(root) ? $"/{CollectionsZkNode}" : $"/{root}/{CollectionsZkNode}";
+    public static string GetCollectionsUrlPath(string? root) =>
+        string.IsNullOrEmpty(root) ? $"/{CollectionsZkNode}" : $"/{root}/{CollectionsZkNode}";
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string GetClusterStateUrlPath(string? root) => string.IsNullOrEmpty(root) ? $"/{ClusterState}" : $"/{root}/{ClusterState}";
+    public static string GetClusterStateUrlPath(string? root) =>
+        string.IsNullOrEmpty(root) ? $"/{ClusterState}" : $"/{root}/{ClusterState}";
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string GetCollectionsStateUrlPath() => CollectionState;

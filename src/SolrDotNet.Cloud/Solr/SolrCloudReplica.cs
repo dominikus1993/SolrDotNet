@@ -1,6 +1,6 @@
 namespace SolrDotNet.Cloud.Solr;
 
-public class SolrCloudReplica
+internal class SolrCloudReplica
 {
     /// <summary>
     /// Is active
@@ -20,7 +20,7 @@ public class SolrCloudReplica
     /// <summary>
     /// Replica url
     /// </summary>
-    public string Url { get; }
+    public Uri? Url { get; }
 
     /// <summary>
     /// Constructor
@@ -30,6 +30,6 @@ public class SolrCloudReplica
         IsActive = isActive;
         IsLeader = isLeader;
         Name = name;
-        Url = url;
+        Url = new Uri(url);
     }
 }

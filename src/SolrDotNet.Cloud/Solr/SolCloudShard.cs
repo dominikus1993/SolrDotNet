@@ -1,6 +1,6 @@
 namespace SolrDotNet.Cloud.Solr;
 
-public class SolrCloudShard
+internal class SolrCloudShard
 {
     /// <summary>
     /// Is active
@@ -30,7 +30,8 @@ public class SolrCloudShard
     /// <summary>
     /// Constructor
     /// </summary>
-    public SolrCloudShard(bool isActive, string name, int? rangeEnd, int? rangeStart, IReadOnlyDictionary<string, SolrCloudReplica> replicas)
+    public SolrCloudShard(bool isActive, string name, int? rangeEnd, int? rangeStart,
+        IReadOnlyDictionary<string, SolrCloudReplica>? replicas)
     {
         ArgumentNullException.ThrowIfNull(replicas, nameof(replicas));
         IsActive = isActive;

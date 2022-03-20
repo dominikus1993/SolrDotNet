@@ -15,11 +15,11 @@ internal static class UrlValidator
         }
         catch (ArgumentException e)
         {
-            throw new InvalidURLException(string.Format("Invalid URL '{0}'", s), e);
+            throw new InvalidURLException($"Invalid URL '{s}'", e);
         }
         catch (UriFormatException e)
         {
-            throw new InvalidURLException(string.Format("Invalid URL '{0}'", s), e);
+            throw new InvalidURLException($"Invalid URL '{s}'", e);
         }
     }
 
