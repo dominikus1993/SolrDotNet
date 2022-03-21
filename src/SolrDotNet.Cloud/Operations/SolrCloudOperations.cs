@@ -22,154 +22,154 @@ namespace SolrDotNet.Cloud.Operations;
 
         public SolrQueryResults<T> Query(ISolrQuery query, QueryOptions options)
         {
-            var operations = base.GetOperations<T>();
+            var operations = base.GetOperations();
             return operations.Query(query, options);
         }
 
         /// <inheritdoc />
         public SolrMoreLikeThisHandlerResults<T> MoreLikeThis(SolrMLTQuery query, MoreLikeThisHandlerQueryOptions options)
         {
-            var operations = base.GetOperations<T>();
+            var operations = base.GetOperations();
             return operations.MoreLikeThis(query, options);
         }
 
         /// <inheritdoc />
         public ResponseHeader Ping()
         {
-            var operations = base.GetOperations<T>();
+            var operations = base.GetOperations();
             return  operations.Ping();
         }
 
         /// <inheritdoc />
         public SolrSchema GetSchema(string schemaFileName)
         {
-            var operations = base.GetOperations<T>();
+            var operations = base.GetOperations();
             return operations.GetSchema(schemaFileName);
         }
 
         /// <inheritdoc />
         public SolrDIHStatus GetDIHStatus(KeyValuePair<string, string> options)
         {
-            var operations = base.GetOperations<T>();
+            var operations = base.GetOperations();
             return operations.GetDIHStatus(options);
         }
 
         /// <inheritdoc />
         public SolrQueryResults<T> Query(string q)
         {
-            var operations = base.GetOperations<T>();
+            var operations = base.GetOperations();
             return operations.Query(q);
         }
 
         /// <inheritdoc />
         public SolrQueryResults<T> Query(string q, ICollection<SortOrder> orders)
         {
-            var operations = base.GetOperations<T>();
+            var operations = base.GetOperations();
             return operations.Query(q, orders);
         }
 
         /// <inheritdoc />
         public SolrQueryResults<T> Query(string q, QueryOptions options)
         {
-            var operations = base.GetOperations<T>();
+            var operations = base.GetOperations();
             return operations.Query(q, options);
         }
 
         /// <inheritdoc />
         public SolrQueryResults<T> Query(ISolrQuery q)
         {
-            var operations = base.GetOperations<T>();
+            var operations = base.GetOperations();
             return operations.Query(q);
         }
 
         /// <inheritdoc />
         public SolrQueryResults<T> Query(ISolrQuery query, ICollection<SortOrder> orders)
         {
-            var operations = base.GetOperations<T>();
+            var operations = base.GetOperations();
             return operations.Query(query, orders);
         }
 
         /// <inheritdoc />
         public ICollection<KeyValuePair<string, int>> FacetFieldQuery(SolrFacetFieldQuery facets)
         {
-            var operations = base.GetOperations<T>();
+            var operations = base.GetOperations();
             return operations.FacetFieldQuery(facets);
         }
 
         /// <inheritdoc />
         public ResponseHeader Commit()
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.Commit();
         }
 
         /// <inheritdoc />
         public ResponseHeader Rollback()
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.Commit();
         }
 
         /// <inheritdoc />
         public ResponseHeader Optimize()
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.Commit();
         }
 
         /// <inheritdoc />
         public ResponseHeader Add(T doc)
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.Add(doc);
         }
 
         /// <inheritdoc />
         public ResponseHeader Add(T doc, AddParameters parameters)
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.Add(doc, parameters);
         }
 
         /// <inheritdoc />
         public ResponseHeader AddWithBoost(T doc, double boost)
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.AddWithBoost(doc, boost);
         }
 
         /// <inheritdoc />
         public ResponseHeader AddWithBoost(T doc, double boost, AddParameters parameters)
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.AddWithBoost(doc, boost, parameters);
         }
 
         /// <inheritdoc />
         public ExtractResponse Extract(ExtractParameters parameters)
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.Extract(parameters);
         }
 
         /// <inheritdoc />
         public ResponseHeader Add(IEnumerable<T> docs)
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.AddRange(docs);
         }
 
         /// <inheritdoc />
         public ResponseHeader AddRange(IEnumerable<T> docs)
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.AddRange(docs);
         }
 
         /// <inheritdoc />
         public ResponseHeader AddRange(IEnumerable<T> docs, AddParameters parameters)
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.AddRange(docs, parameters);
         }
 
@@ -177,14 +177,14 @@ namespace SolrDotNet.Cloud.Operations;
         [Obsolete("Obsolete")]
         public ResponseHeader AddWithBoost(IEnumerable<KeyValuePair<T, double?>> docs)
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.AddWithBoost(docs);
         }
 
         /// <inheritdoc />
         public ResponseHeader AddRangeWithBoost(IEnumerable<KeyValuePair<T, double?>> docs)
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.AddRangeWithBoost(docs);
         }
 
@@ -192,154 +192,178 @@ namespace SolrDotNet.Cloud.Operations;
         [Obsolete("Obsolete")]
         public ResponseHeader AddWithBoost(IEnumerable<KeyValuePair<T, double?>> docs, AddParameters parameters)
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.AddWithBoost(docs, parameters);
         }
 
         /// <inheritdoc />
         public ResponseHeader AddRangeWithBoost(IEnumerable<KeyValuePair<T, double?>> docs, AddParameters parameters)
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.AddRangeWithBoost(docs, parameters);
         }
 
         /// <inheritdoc />
         public ResponseHeader Delete(T doc)
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.Delete(doc);
         }
 
         /// <inheritdoc />
         public ResponseHeader Delete(T doc, DeleteParameters parameters)
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.Delete(doc, parameters);
         }
 
         /// <inheritdoc />
         public ResponseHeader Delete(IEnumerable<T> docs)
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.Delete(docs);
         }
 
         /// <inheritdoc />
         public ResponseHeader Delete(IEnumerable<T> docs, DeleteParameters parameters)
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.Delete(docs, parameters);
         }
 
         /// <inheritdoc />
         public ResponseHeader Delete(ISolrQuery q)
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.Delete(q);
         }
 
         /// <inheritdoc />
         public ResponseHeader Delete(ISolrQuery q, DeleteParameters parameters)
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.Delete(q, parameters);
         }
 
         /// <inheritdoc />
         public ResponseHeader Delete(string id)
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.Delete(id);
         }
 
         /// <inheritdoc />
         public ResponseHeader Delete(string id, DeleteParameters parameters)
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.Delete(id, parameters);
         }
 
         /// <inheritdoc />
         public ResponseHeader Delete(IEnumerable<string> ids)
         {
-            var operations = base.GetOperations<T>(true);
+            var operations = base.GetOperations(true);
             return operations.Delete(ids);
         }
 
         /// <inheritdoc />
         public ResponseHeader Delete(IEnumerable<string> ids, DeleteParameters parameters)
         {
-            return PerformOperation(operations => operations.Delete(ids, parameters), true);
+            var operations = base.GetOperations(true);
+            return operations.Delete(ids, parameters);
         }
 
         /// <inheritdoc />
         public ResponseHeader Delete(IEnumerable<string> ids, ISolrQuery q)
         {
-            return PerformOperation(operations => operations.Delete(ids, q), true);
+            var operations = base.GetOperations(true);
+            return operations.Delete(ids, q);
         }
 
         /// <inheritdoc />
         public ResponseHeader Delete(IEnumerable<string> ids, ISolrQuery q, DeleteParameters parameters)
         {
-            return PerformOperation(operations => operations.Delete(ids, q, parameters), true);
+            var operations = base.GetOperations(true);
+            return operations.Delete(ids, q, parameters);
         }
 
         /// <inheritdoc />
         public ResponseHeader BuildSpellCheckDictionary()
         {
-            return PerformOperation(operations => operations.BuildSpellCheckDictionary(), true);
+            var operations = base.GetOperations(true);
+            return operations.BuildSpellCheckDictionary();
         }
 
         /// <inheritdoc />
         public IEnumerable<ValidationResult> EnumerateValidationResults()
         {
-            return PerformOperation(operations => operations.EnumerateValidationResults());
+            var operations = base.GetOperations(true);
+            return  operations.EnumerateValidationResults();
         }
 
         /// <inheritdoc />
         public ResponseHeader AtomicUpdate(T doc, IEnumerable<AtomicUpdateSpec> updateSpecs)
         {
-            return PerformOperation(operations => operations.AtomicUpdate(doc, updateSpecs), true);
+            var operations = base.GetOperations(true);
+            return operations.AtomicUpdate(doc, updateSpecs);
         }
 
         /// <inheritdoc />
         public ResponseHeader AtomicUpdate(string id, IEnumerable<AtomicUpdateSpec> updateSpecs)
         {
-            return PerformOperation(operations => operations.AtomicUpdate(id, updateSpecs), true);
+            var operations = base.GetOperations(true);
+            return operations.AtomicUpdate(id, updateSpecs);
         }
 
         /// <inheritdoc />
         public ResponseHeader AtomicUpdate(T doc, IEnumerable<AtomicUpdateSpec> updateSpecs, AtomicUpdateParameters parameters)
         {
-            return PerformOperation(operations => operations.AtomicUpdate(doc, updateSpecs, parameters), true);
+            var operations = base.GetOperations(true);
+            return operations.AtomicUpdate(doc, updateSpecs, parameters);
         }
 
         /// <inheritdoc />
         public ResponseHeader AtomicUpdate(string id, IEnumerable<AtomicUpdateSpec> updateSpecs, AtomicUpdateParameters parameters)
         {
-            return PerformOperation(operations => operations.AtomicUpdate(id, updateSpecs, parameters), true);
+            var operations = base.GetOperations(true);
+            return operations.AtomicUpdate(id, updateSpecs, parameters);
         }
 
         /// <inheritdoc />
-        public Task<ResponseHeader> CommitAsync()
-            => PerformOperation(operations => operations.CommitAsync());
+        public async Task<ResponseHeader> CommitAsync()
+        {
+            var operations = base.GetOperations();
+            return await operations.CommitAsync();
+        }
 
         /// <inheritdoc />
-        public Task<ResponseHeader> RollbackAsync()
-            => PerformOperation(operations => operations.RollbackAsync());
+        public async Task<ResponseHeader> RollbackAsync()
+        {
+            var operations = base.GetOperations();
+            return await operations.RollbackAsync();
+        }
 
         /// <inheritdoc />
-        public Task<ResponseHeader> OptimizeAsync()
-            => PerformOperation(operations => operations.OptimizeAsync());
+        public async Task<ResponseHeader> OptimizeAsync()
+        {
+            var operations = base.GetOperations();
+            return await operations.OptimizeAsync();
+        }
 
 
         /// <inheritdoc />
-        public Task<ResponseHeader> AddAsync(T doc)
-            => PerformOperation(operations => operations.AddAsync(doc));
+        public async Task<ResponseHeader> AddAsync(T doc)
+        {
+            var operations = base.GetOperations();
+            return await operations.AddAsync(doc);
+        }
 
         /// <inheritdoc />
-        public Task<ResponseHeader> AddAsync(T doc, AddParameters parameters)
-            => PerformOperation(operations => operations.AddAsync(doc, parameters));
+        public async Task<ResponseHeader> AddAsync(T doc, AddParameters parameters)
+        {
+            var operations = base.GetOperations();
+            return await operations.AddAsync(doc, parameters);
+        }
 
 
         /// <inheritdoc />

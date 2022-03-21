@@ -49,7 +49,7 @@ namespace SolrDotNet.Cloud.Operations;
         /// <summary>
         /// Performs basic operation
         /// </summary>
-        protected ISolrBasicOperations<T> GetBasicOperations<TResult>(bool leader = false)
+        protected ISolrBasicOperations<T> GetBasicOperations(bool leader = false)
         {
             var collection = GetCollection(collectionName);
             var url = collection.GetUrl(leader);
@@ -68,7 +68,7 @@ namespace SolrDotNet.Cloud.Operations;
         /// <summary>
         /// Perform operation
         /// </summary>
-        protected ISolrOperations<T> GetOperations<TResult>(bool leader = false) {
+        protected ISolrOperations<T> GetOperations(bool leader = false) {
             var collection = GetCollection(collectionName);
             var url = collection.GetUrl(leader);
             if (url is null)
