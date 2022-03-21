@@ -85,7 +85,7 @@ public class HttpClientSolrConnection : IStreamSolrConnection
     }
 
     /// <inheritdoc />
-    public async Task<Stream> PostStreamAsStreamAsync(string relativeUrl, string contentType, Stream content, IEnumerable<KeyValuePair<string, string>>? getParameters, CancellationToken cancellationToken)
+    public async Task<Stream> PostStreamAsStreamAsync(string relativeUrl, string? contentType, Stream content, IEnumerable<KeyValuePair<string, string>>? getParameters, CancellationToken cancellationToken)
     {
         var u = new UriBuilder(_baseUrl);
         u.Path += relativeUrl;

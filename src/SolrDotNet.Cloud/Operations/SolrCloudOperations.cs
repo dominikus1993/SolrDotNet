@@ -330,59 +330,62 @@ namespace SolrDotNet.Cloud.Operations;
         }
 
         /// <inheritdoc />
-        public async Task<ResponseHeader> CommitAsync()
+        public Task<ResponseHeader> CommitAsync()
         {
             var operations = base.GetOperations();
-            return await operations.CommitAsync();
+            return operations.CommitAsync();
         }
 
         /// <inheritdoc />
-        public async Task<ResponseHeader> RollbackAsync()
+        public Task<ResponseHeader> RollbackAsync()
         {
             var operations = base.GetOperations();
-            return await operations.RollbackAsync();
+            return operations.RollbackAsync();
         }
 
         /// <inheritdoc />
-        public async Task<ResponseHeader> OptimizeAsync()
+        public Task<ResponseHeader> OptimizeAsync()
         {
             var operations = base.GetOperations();
-            return await operations.OptimizeAsync();
-        }
-
-
-        /// <inheritdoc />
-        public async Task<ResponseHeader> AddAsync(T doc)
-        {
-            var operations = base.GetOperations();
-            return await operations.AddAsync(doc);
-        }
-
-        /// <inheritdoc />
-        public async Task<ResponseHeader> AddAsync(T doc, AddParameters parameters)
-        {
-            var operations = base.GetOperations();
-            return await operations.AddAsync(doc, parameters);
+            return operations.OptimizeAsync();
         }
 
 
         /// <inheritdoc />
-        public async Task<ResponseHeader> AddWithBoostAsync(T doc, double boost)
+        public Task<ResponseHeader> AddAsync(T doc)
         {
             var operations = base.GetOperations();
-            return await operations.AddWithBoostAsync(doc, boost);
+            return operations.AddAsync(doc);
         }
 
         /// <inheritdoc />
-        public async Task<ResponseHeader> AddWithBoostAsync(T doc, double boost, AddParameters parameters)
+        public Task<ResponseHeader> AddAsync(T doc, AddParameters parameters)
         {
             var operations = base.GetOperations();
-            return await operations.AddWithBoostAsync(doc, boost, parameters);
+            return operations.AddAsync(doc, parameters);
+        }
+
+
+        /// <inheritdoc />
+        public Task<ResponseHeader> AddWithBoostAsync(T doc, double boost)
+        {
+            var operations = base.GetOperations();
+            return operations.AddWithBoostAsync(doc, boost);
+        }
+
+        /// <inheritdoc />
+        public Task<ResponseHeader> AddWithBoostAsync(T doc, double boost, AddParameters parameters)
+        {
+            var operations = base.GetOperations();
+            return operations.AddWithBoostAsync(doc, boost, parameters);
         }
 
         /// <inheritdoc />
         public Task<ExtractResponse> ExtractAsync(ExtractParameters parameters)
-            => PerformOperation(operations => operations.ExtractAsync(parameters));
+        {
+            var operations = base.GetOperations();
+            return operations.ExtractAsync(parameters);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> AddRangeAsync(IEnumerable<T> docs)
