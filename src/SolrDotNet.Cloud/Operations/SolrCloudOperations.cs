@@ -367,13 +367,18 @@ namespace SolrDotNet.Cloud.Operations;
 
 
         /// <inheritdoc />
-        public Task<ResponseHeader> AddWithBoostAsync(T doc, double boost)
-            => PerformOperation(operations => operations.AddWithBoostAsync(doc, boost));
-
+        public async Task<ResponseHeader> AddWithBoostAsync(T doc, double boost)
+        {
+            var operations = base.GetOperations();
+            return await operations.AddWithBoostAsync(doc, boost);
+        }
 
         /// <inheritdoc />
-        public Task<ResponseHeader> AddWithBoostAsync(T doc, double boost, AddParameters parameters)
-            => PerformOperation(operations => operations.AddWithBoostAsync(doc, boost, parameters));
+        public async Task<ResponseHeader> AddWithBoostAsync(T doc, double boost, AddParameters parameters)
+        {
+            var operations = base.GetOperations();
+            return await operations.AddWithBoostAsync(doc, boost, parameters);
+        }
 
         /// <inheritdoc />
         public Task<ExtractResponse> ExtractAsync(ExtractParameters parameters)
