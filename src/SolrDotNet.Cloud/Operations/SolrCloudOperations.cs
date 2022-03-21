@@ -120,127 +120,150 @@ namespace SolrDotNet.Cloud.Operations;
         /// <inheritdoc />
         public ResponseHeader Add(T doc)
         {
-            return PerformOperation(operations => operations.Add(doc), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.Add(doc);
         }
 
         /// <inheritdoc />
         public ResponseHeader Add(T doc, AddParameters parameters)
         {
-            return PerformOperation(operations => operations.Add(doc, parameters), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.Add(doc, parameters);
         }
 
         /// <inheritdoc />
         public ResponseHeader AddWithBoost(T doc, double boost)
         {
-            return PerformOperation(operations => operations.AddWithBoost(doc, boost), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.AddWithBoost(doc, boost);
         }
 
         /// <inheritdoc />
         public ResponseHeader AddWithBoost(T doc, double boost, AddParameters parameters)
         {
-            return PerformOperation(operations => operations.AddWithBoost(doc, boost, parameters), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.AddWithBoost(doc, boost, parameters);
         }
 
         /// <inheritdoc />
         public ExtractResponse Extract(ExtractParameters parameters)
         {
-            return PerformOperation(operations => operations.Extract(parameters), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.Extract(parameters);
         }
 
         /// <inheritdoc />
         public ResponseHeader Add(IEnumerable<T> docs)
         {
-            return PerformOperation(operations => operations.AddRange(docs), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.AddRange(docs);
         }
 
         /// <inheritdoc />
         public ResponseHeader AddRange(IEnumerable<T> docs)
         {
-            return PerformOperation(operations => operations.AddRange(docs), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.AddRange(docs);
         }
 
         /// <inheritdoc />
         public ResponseHeader AddRange(IEnumerable<T> docs, AddParameters parameters)
         {
-            return PerformOperation(operations => operations.AddRange(docs, parameters), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.AddRange(docs, parameters);
         }
 
         /// <inheritdoc />
+        [Obsolete("Obsolete")]
         public ResponseHeader AddWithBoost(IEnumerable<KeyValuePair<T, double?>> docs)
         {
-            return PerformOperation(operations => operations.AddWithBoost(docs), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.AddWithBoost(docs);
         }
 
         /// <inheritdoc />
         public ResponseHeader AddRangeWithBoost(IEnumerable<KeyValuePair<T, double?>> docs)
         {
-            return PerformOperation(operations => operations.AddRangeWithBoost(docs), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.AddRangeWithBoost(docs);
         }
 
         /// <inheritdoc />
+        [Obsolete("Obsolete")]
         public ResponseHeader AddWithBoost(IEnumerable<KeyValuePair<T, double?>> docs, AddParameters parameters)
         {
-            return PerformOperation(operations => operations.AddWithBoost(docs, parameters), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.AddWithBoost(docs, parameters);
         }
 
         /// <inheritdoc />
         public ResponseHeader AddRangeWithBoost(IEnumerable<KeyValuePair<T, double?>> docs, AddParameters parameters)
         {
-            return PerformOperation(operations => operations.AddRangeWithBoost(docs, parameters), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.AddRangeWithBoost(docs, parameters);
         }
 
         /// <inheritdoc />
         public ResponseHeader Delete(T doc)
         {
-            return PerformOperation(operations => operations.Delete(doc), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.Delete(doc);
         }
 
         /// <inheritdoc />
         public ResponseHeader Delete(T doc, DeleteParameters parameters)
         {
-            return PerformOperation(operations => operations.Delete(doc, parameters), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.Delete(doc, parameters);
         }
 
         /// <inheritdoc />
         public ResponseHeader Delete(IEnumerable<T> docs)
         {
-            return PerformOperation(operations => operations.Delete(docs), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.Delete(docs);
         }
 
         /// <inheritdoc />
         public ResponseHeader Delete(IEnumerable<T> docs, DeleteParameters parameters)
         {
-            return PerformOperation(operations => operations.Delete(docs, parameters), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.Delete(docs, parameters);
         }
 
         /// <inheritdoc />
         public ResponseHeader Delete(ISolrQuery q)
         {
-            return PerformOperation(operations => operations.Delete(q), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.Delete(q);
         }
 
         /// <inheritdoc />
         public ResponseHeader Delete(ISolrQuery q, DeleteParameters parameters)
         {
-            return PerformOperation(operations => operations.Delete(q, parameters), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.Delete(q, parameters);
         }
 
         /// <inheritdoc />
         public ResponseHeader Delete(string id)
         {
-            return PerformOperation(operations => operations.Delete(id), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.Delete(id);
         }
 
         /// <inheritdoc />
         public ResponseHeader Delete(string id, DeleteParameters parameters)
         {
-            return PerformOperation(operations => operations.Delete(id, parameters), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.Delete(id, parameters);
         }
 
         /// <inheritdoc />
         public ResponseHeader Delete(IEnumerable<string> ids)
         {
-            return PerformOperation(operations => operations.Delete(ids), true);
+            var operations = base.GetOperations<T>(true);
+            return operations.Delete(ids);
         }
 
         /// <inheritdoc />
