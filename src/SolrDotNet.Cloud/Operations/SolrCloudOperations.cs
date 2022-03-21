@@ -389,23 +389,38 @@ namespace SolrDotNet.Cloud.Operations;
 
         /// <inheritdoc />
         public Task<ResponseHeader> AddRangeAsync(IEnumerable<T> docs)
-            => PerformOperation(operations => operations.AddRangeAsync(docs));
+        {
+            var operations = base.GetOperations();
+            return operations.AddRangeAsync(docs);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> AddRangeAsync(IEnumerable<T> docs, AddParameters parameters)
-            => PerformOperation(operations => operations.AddRangeAsync(docs, parameters));
+        {
+            var operations = base.GetOperations();
+            return operations.AddRangeAsync(docs, parameters);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> AddRangeWithBoostAsync(IEnumerable<KeyValuePair<T, double?>> docs)
-            => PerformOperation(operations => operations.AddRangeWithBoostAsync(docs));
+        {
+            var operations = base.GetOperations();
+            return operations.AddRangeWithBoostAsync(docs);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> AddRangeWithBoostAsync(IEnumerable<KeyValuePair<T, double?>> docs, AddParameters parameters)
-            => PerformOperation(operations => operations.AddRangeWithBoostAsync(docs, parameters));
+        {
+            var operations = base.GetOperations();
+            return operations.AddRangeWithBoostAsync(docs, parameters);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> DeleteAsync(T doc)
-            => PerformOperation(operations => operations.DeleteAsync(doc));
+        {
+            var operations = base.GetOperations();
+            return operations.DeleteAsync(doc);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> DeleteAsync(T doc, DeleteParameters parameters)

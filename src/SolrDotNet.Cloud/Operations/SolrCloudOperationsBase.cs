@@ -89,11 +89,10 @@ namespace SolrDotNet.Cloud.Operations;
         /// </summary>
         private ISolrCloudCollection GetCollection(string? collection) {
             var state = cloudStateProvider.GetCloudState();
-            if (state == null)
+            if (state is null)
             {
                 throw new ApplicationException("Didn't get state from zookeeper.");
             }
-
             return state.GetCollection(collection);
         }
     }
