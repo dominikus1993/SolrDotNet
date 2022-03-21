@@ -1,3 +1,4 @@
+using SolrDotNet.Cloud.Exceptions;
 using SolrDotNet.Cloud.Extensions;
 
 namespace SolrDotNet.Cloud.Solr;
@@ -83,7 +84,7 @@ internal class SolrCloudCollection : ISolrCloudCollection
 
         if (replica is null)
         {
-            throw new ApplicationException("No appropriate node was selected to perform the operation.");
+            throw new NoAppropriateNodeWasSelectedException();
         }
 
         return replica.Url;
