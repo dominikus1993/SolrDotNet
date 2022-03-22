@@ -424,123 +424,211 @@ namespace SolrDotNet.Cloud.Operations;
 
         /// <inheritdoc />
         public Task<ResponseHeader> DeleteAsync(T doc, DeleteParameters parameters)
-            => PerformOperation(operations => operations.DeleteAsync(doc, parameters));
+        {
+            var operations = base.GetOperations();
+            return operations.DeleteAsync(doc, parameters);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> DeleteAsync(IEnumerable<T> docs)
-            => PerformOperation(operations => operations.DeleteAsync(docs));
+        {
+            var operations = base.GetOperations();
+            return operations.DeleteAsync(docs);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> DeleteAsync(IEnumerable<T> docs, DeleteParameters parameters)
-            => PerformOperation(operations => operations.DeleteAsync(docs, parameters));
+        {
+            var operations = base.GetOperations();
+            return operations.DeleteAsync(docs, parameters);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> DeleteAsync(ISolrQuery q)
-            => PerformOperation(operations => operations.DeleteAsync(q));
+        {
+            var operations = base.GetOperations();
+            return operations.DeleteAsync(q);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> DeleteAsync(ISolrQuery q, DeleteParameters parameters)
-            => PerformOperation(operations => operations.DeleteAsync(q, parameters));
+        {
+            var operations = base.GetOperations();
+            return operations.DeleteAsync(q, parameters);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> DeleteAsync(string id)
-            => PerformOperation(operations => operations.DeleteAsync(id));
+        {
+            var operations = base.GetOperations();
+            return operations.DeleteAsync(id);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> DeleteAsync(string id, DeleteParameters parameters)
-            => PerformOperation(operations => operations.DeleteAsync(id, parameters));
+        {
+            var operations = base.GetOperations();
+            return operations.DeleteAsync(id, parameters);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> DeleteAsync(IEnumerable<string> ids)
-            => PerformOperation(operations => operations.DeleteAsync(ids));
+        {
+            var operations = base.GetOperations();
+            return operations.DeleteAsync(ids);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> DeleteAsync(IEnumerable<string> ids, DeleteParameters parameters)
-            => PerformOperation(operations => operations.DeleteAsync(ids, parameters));
+        {
+            var operations = base.GetOperations();
+            return operations.DeleteAsync(ids, parameters);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> DeleteAsync(IEnumerable<string> ids, ISolrQuery q)
-            => PerformOperation(operations => operations.DeleteAsync(ids, q));
+        {
+            var operations = base.GetOperations();
+            return operations.DeleteAsync(ids, q);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> DeleteAsync(IEnumerable<string> ids, ISolrQuery q, DeleteParameters parameters)
-            => PerformOperation(operations => operations.DeleteAsync(ids, q, parameters));
+        {
+            var operations = base.GetOperations();
+            return operations.DeleteAsync(ids, q, parameters);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> BuildSpellCheckDictionaryAsync()
-            => PerformOperation(operations => operations.BuildSpellCheckDictionaryAsync());
+        {
+            var operations = base.GetOperations();
+            return operations.BuildSpellCheckDictionaryAsync();
+        }
 
         /// <inheritdoc />
         public Task<IEnumerable<ValidationResult>> EnumerateValidationResultsAsync()
-            => PerformOperation(operations => operations.EnumerateValidationResultsAsync());
+        {
+            var operations = base.GetOperations();
+            return  operations.EnumerateValidationResultsAsync();
+        }
 
         /// <inheritdoc />
-        public Task<SolrQueryResults<T>> QueryAsync(string q, CancellationToken cancellationToken = default(CancellationToken))
-            => PerformOperation(operations => operations.QueryAsync(q, cancellationToken));
+        public Task<SolrQueryResults<T>> QueryAsync(string q, CancellationToken cancellationToken = default)
+        {
+            var operations = base.GetOperations();
+            return operations.QueryAsync(q, cancellationToken);
+        }
 
         /// <inheritdoc />
-        public Task<SolrQueryResults<T>> QueryAsync(string q, ICollection<SortOrder> orders, CancellationToken cancellationToken = default(CancellationToken))
-            => PerformOperation(operations => operations.QueryAsync(q, orders, cancellationToken));
+        public Task<SolrQueryResults<T>> QueryAsync(string q, ICollection<SortOrder> orders, CancellationToken cancellationToken = default)
+        {
+            var operations = base.GetOperations();
+            return operations.QueryAsync(q, orders, cancellationToken);
+        }
 
         /// <inheritdoc />
-        public Task<SolrQueryResults<T>> QueryAsync(string q, QueryOptions options, CancellationToken cancellationToken = default(CancellationToken))
-            => PerformOperation(operations => operations.QueryAsync(q, options, cancellationToken));
+        public Task<SolrQueryResults<T>> QueryAsync(string q, QueryOptions options, CancellationToken cancellationToken = default)
+        {
+            var operations = base.GetOperations();
+            return operations.QueryAsync(q, options, cancellationToken);
+        }
 
         /// <inheritdoc />
-        public Task<SolrQueryResults<T>> QueryAsync(ISolrQuery q, CancellationToken cancellationToken = default(CancellationToken))
-            => PerformOperation(operations => operations.QueryAsync(q, cancellationToken));
+        public Task<SolrQueryResults<T>> QueryAsync(ISolrQuery q, CancellationToken cancellationToken = default)
+        {
+            var operations = base.GetOperations();
+            return operations.QueryAsync(q, cancellationToken);
+        }
 
         /// <inheritdoc />
-        public Task<SolrQueryResults<T>> QueryAsync(ISolrQuery query, ICollection<SortOrder> orders, CancellationToken cancellationToken = default(CancellationToken))
-            => PerformOperation(operations => operations.QueryAsync(query, orders, cancellationToken));
+        public Task<SolrQueryResults<T>> QueryAsync(ISolrQuery query, ICollection<SortOrder> orders, CancellationToken cancellationToken = default)
+        {
+            var operations = base.GetOperations();
+            return operations.QueryAsync(query, orders, cancellationToken);
+        }
 
         /// <inheritdoc />
         public Task<ICollection<KeyValuePair<string, int>>> FacetFieldQueryAsync(SolrFacetFieldQuery facets)
-            => PerformOperation(operations => operations.FacetFieldQueryAsync(facets));
+        {
+            var operations = base.GetOperations();
+            return operations.FacetFieldQueryAsync(facets);
+        }
 
         /// <inheritdoc />
-        public Task<SolrQueryResults<T>> QueryAsync(ISolrQuery query, QueryOptions options, CancellationToken cancellationToken = default(CancellationToken))
-            => PerformOperation(operations => operations.QueryAsync(query, options, cancellationToken));
+        public Task<SolrQueryResults<T>> QueryAsync(ISolrQuery query, QueryOptions options, CancellationToken cancellationToken = default)
+        {
+            var operations = base.GetOperations();
+            return operations.QueryAsync(query, options, cancellationToken);
+        }
 
         /// <inheritdoc />
-        public Task<SolrMoreLikeThisHandlerResults<T>> MoreLikeThisAsync(SolrMLTQuery query, MoreLikeThisHandlerQueryOptions options, CancellationToken cancellationToken = default(CancellationToken))
-            => PerformOperation(operations => operations.MoreLikeThisAsync(query, options));
+        public Task<SolrMoreLikeThisHandlerResults<T>> MoreLikeThisAsync(SolrMLTQuery query, MoreLikeThisHandlerQueryOptions options, CancellationToken cancellationToken = default)
+        {
+            var operations = base.GetOperations();
+            return operations.MoreLikeThisAsync(query, options);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> PingAsync()
-            => PerformOperation(operations => operations.PingAsync());
+        {
+            var operations = base.GetOperations();
+            return operations.PingAsync();
+        }
 
         /// <inheritdoc />
         public Task<SolrSchema> GetSchemaAsync(string schemaFileName)
-            => PerformOperation(operations => operations.GetSchemaAsync(schemaFileName));
+        {
+            var operations = base.GetOperations();
+            return operations.GetSchemaAsync(schemaFileName);
+        }
 
         /// <inheritdoc />
         public Task<SolrDIHStatus> GetDIHStatusAsync(KeyValuePair<string, string> options)
-            => PerformOperation(operations => operations.GetDIHStatusAsync(options));
+        {
+            var operations = base.GetOperations();
+            return operations.GetDIHStatusAsync(options);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> AtomicUpdateAsync(T doc, IEnumerable<AtomicUpdateSpec> updateSpecs)
-            => PerformOperation(operations => operations.AtomicUpdateAsync(doc, updateSpecs));
+        {
+            var operations = base.GetOperations();
+            return operations.AtomicUpdateAsync(doc, updateSpecs);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> AtomicUpdateAsync(string id, IEnumerable<AtomicUpdateSpec> updateSpecs)
-            => PerformOperation(operations => operations.AtomicUpdateAsync(id, updateSpecs));
+        {
+            var operations = base.GetOperations();
+            return operations.AtomicUpdateAsync(id, updateSpecs);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> AtomicUpdateAsync(T doc, IEnumerable<AtomicUpdateSpec> updateSpecs, AtomicUpdateParameters parameters)
-            => PerformOperation(operations => operations.AtomicUpdateAsync(doc, updateSpecs, parameters));
+        {
+            var operations = base.GetOperations();
+            return operations.AtomicUpdateAsync(doc, updateSpecs, parameters);
+        }
 
         /// <inheritdoc />
         public Task<ResponseHeader> AtomicUpdateAsync(string id, IEnumerable<AtomicUpdateSpec> updateSpecs, AtomicUpdateParameters parameters)
-            => PerformOperation(operations => operations.AtomicUpdateAsync(id, updateSpecs, parameters));
+        {
+            var operations = base.GetOperations();
+            return operations.AtomicUpdateAsync(id, updateSpecs, parameters);
+        }
 
         /// <inheritdoc />
         public IEnumerable<ValidationResult> EnumerateValidationResults(string schemaFileName)
         {
-            return PerformOperation(operations => operations.EnumerateValidationResults(schemaFileName));
+            var operations = base.GetOperations();
+            return operations.EnumerateValidationResults(schemaFileName);
         }
 
         /// <inheritdoc />
         public Task<IEnumerable<ValidationResult>> EnumerateValidationResultsAsync(string schemaFileName)
-          => PerformOperation(operations => operations.EnumerateValidationResultsAsync(schemaFileName));
+        {
+            var operations = base.GetOperations();
+            return operations.EnumerateValidationResultsAsync(schemaFileName);
+        }
     }
