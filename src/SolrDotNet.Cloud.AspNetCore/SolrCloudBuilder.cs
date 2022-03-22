@@ -38,9 +38,9 @@ namespace SolrDotNet.Cloud.AspNetCore;
 
         private readonly SolrCloudConfig _configuration;
         private readonly IServiceCollection _services;
-        private readonly AliasSolrCloudStateProvider _aliasSolrCloudStateProvider;
+        private readonly SolrCloudClient _aliasSolrCloudStateProvider;
 
-        public SolrCloudBuilder(SolrCloudConfig configuration, IServiceCollection services, AliasSolrCloudStateProvider aliasSolrCloudStateProvider)
+        public SolrCloudBuilder(SolrCloudConfig configuration, IServiceCollection services, SolrCloudClient aliasSolrCloudStateProvider)
         {
             _configuration = configuration;
             _services = services;
@@ -99,13 +99,6 @@ namespace SolrDotNet.Cloud.AspNetCore;
                 throw new ArgumentNullException(nameof(collectionName));
 
             await EnsureRegistrationAsync(_services, _aliasSolrCloudStateProvider);
-
-            var validaionResult = _aliasSolrCloudStateProvider.ValidateConnection(collectionName);
-
-            if (!validaionResult.IsValid)
-            {
-                throw new CollectionOrAliasNotFoundException(collectionName);
-            }
 
             if (!Collections.Add(collectionName))
                 return;

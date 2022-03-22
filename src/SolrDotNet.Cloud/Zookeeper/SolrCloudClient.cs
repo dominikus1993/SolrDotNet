@@ -24,7 +24,7 @@ public class Aliases
     }
 }
 
-internal class SolrCloudClient : Watcher, ISolrCloudStateProvider
+public class SolrCloudClient : Watcher, ISolrCloudStateProvider
 {
     public string Key { get; private set; }
 
