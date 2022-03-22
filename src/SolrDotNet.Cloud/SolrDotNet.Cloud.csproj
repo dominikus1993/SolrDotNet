@@ -14,4 +14,7 @@
     <PackageReference Include="LanguageExt.Core" Version="4.0.4" /> 
     <PackageReference Include="SolrNet" Version="1.0.19" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SolrDotNet\SolrDotNet.csproj" />
+  </ItemGroup>
 </Project>
