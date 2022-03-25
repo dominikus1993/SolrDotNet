@@ -140,18 +140,15 @@ namespace SolrDotNet.Cloud.AspNetCore;
             if (Providers.Count == 0)
                 services.AddTransient<ISolrOperationsProvider, HttpClientOperationsProvider>();
             services.AddHttpClient(HttpClientSolrConnection.HttpClientSolrConnectionClient)
-                        .ConfigurePrimaryHttpMessageHandler(() =>
+                        .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
                         {
-                            return new HttpClientHandler
-                            {
-                                AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip,
-                            };
+                            AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip,
                         });
             if (Providers.ContainsKey(cloudStateProvider.Key))
                 return;
             await cloudStateProvider.InitAsync();
             Providers.Add(cloudStateProvider.Key, cloudStateProvider);
-            services.AddTransient<ISolrCloudStateProvider>(_ => cloudStateProvider);
+            services.AddTransient(_ => cloudStateProvider);
         }
 
         private class OperationsProvider : ISolrOperationsProvider
