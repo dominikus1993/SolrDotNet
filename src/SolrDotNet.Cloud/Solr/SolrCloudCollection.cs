@@ -53,7 +53,9 @@ internal class SolrCloudCollection : ISolrCloudCollection
     /// </summary>
     public IReadOnlyDictionary<string, SolrCloudShard> Shards { get; }
 
-    private readonly List<SolrCloudReplica> _activeReplicas;
+    private readonly SolrCloudReplica[] _activeReplicas;
+    private readonly SolrCloudReplica[] _activeOnlyLeaderReplica;
+    private readonly Random _random = new();
 
 
     /// <summary>
@@ -71,21 +73,36 @@ internal class SolrCloudCollection : ISolrCloudCollection
             .Where(shard => shard.IsActive)
             .SelectMany(shard => shard.Replicas?.Values ?? Enumerable.Empty<SolrCloudReplica>())
             .Where(shard => shard.IsActive)
-            .ToList();
+            .ToArray();
+        _activeOnlyLeaderReplica = _activeReplicas.Where(replica => replica.IsLeader).ToArray();
     }
 
     public Uri? GetUrl(bool leader)
     {
-        // TODO Optimize this shit !!
-        var replica = _activeReplicas
-            .Where(replica => (!leader || replica.IsLeader))
-            .OrderBy(_ => Guid.NewGuid())
-            .FirstOrDefault();
 
-        if (replica is null)
+        var replicaUri = leader ? GetUrl(_activeOnlyLeaderReplica) : GetUrl(_activeReplicas);
+
+        if (replicaUri is null)
         {
             throw new NoAppropriateNodeWasSelectedException();
         }
+        return replicaUri;
+    }
+    
+    private Uri? GetUrl(SolrCloudReplica[] replicas)
+    {
+        var length = replicas.Length;
+        if (length == 0)
+        {
+            throw new Exception("No Alive Node");
+        }
+
+        if (length== 1)
+        {
+            return replicas[0].Url;
+        }
+
+        var replica = replicas[_random.Next(0, length)];
 
         return replica.Url;
     }
