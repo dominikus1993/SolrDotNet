@@ -1,6 +1,9 @@
+using System.Runtime.CompilerServices;
+
 using SolrDotNet.Cloud.Exceptions;
 using SolrDotNet.Cloud.Extensions;
 
+[assembly: InternalsVisibleTo("SolrDotNet.Tests")]
 namespace SolrDotNet.Cloud.Solr;
 
 public interface ISolrCloudCollection
@@ -94,7 +97,7 @@ internal class SolrCloudCollection : ISolrCloudCollection
         var length = replicas.Length;
         if (length == 0)
         {
-            throw new Exception("No Alive Node");
+            return null;
         }
 
         if (length== 1)
