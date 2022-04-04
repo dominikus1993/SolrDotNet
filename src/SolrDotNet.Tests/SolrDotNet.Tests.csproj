@@ -4,7 +4,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DotNet.Testcontainers" Version="1.5.0" />
+    <PackageReference Include="DotNet.Testcontainers" Version="1.6.0-beta.2130" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(TestSdkVersion)" />
     <PackageReference Include="Shouldly" Version="4.0.3" />
     <PackageReference Include="xunit" Version="$(XunitVersion)" />
@@ -14,6 +14,10 @@
   <ItemGroup>
     <ProjectReference Include="..\SolrDotNet.Cloud\SolrDotNet.Cloud.csproj" />
     <ProjectReference Include="..\SolrDotNet\SolrDotNet.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Cloud\Client" />
   </ItemGroup>
 
 </Project>
