@@ -1,5 +1,7 @@
 using System.Runtime.CompilerServices;
 
+using SolrDotNet.Cloud.Exceptions;
+
 [assembly: InternalsVisibleTo("SolrDotNet.Tests")]
 
 namespace SolrDotNet.Cloud.Extensions;
@@ -12,7 +14,7 @@ internal static class SolrLiveNodesParser
     {
         if (nodes is null || nodes.Count == 0)
         {
-            throw new Exception("No live node");
+            throw new NoAliveNodeException();
         }
 
         if (string.IsNullOrEmpty(alias))

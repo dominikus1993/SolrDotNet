@@ -24,13 +24,13 @@ internal class SolrCloudAlias : ISolrCloudCollection
         _nodes = SolrLiveNodesParser.ParseAlias(liveNodes, name).ToList();
     }
 
-    public Uri? GetUrl(bool leader)
+    public Uri GetUrl(bool leader)
     {
         var node = _nodes.Count switch
         {
-            0 => throw new Exception("No Alive Node"),
+            0 => throw new NoAliveNodeException(),
             1 => _nodes[0],
-            int count => _nodes[random.Next(0, count)]
+            var count => _nodes[random.Next(0, count)]
         };
         return node.Url;
     }

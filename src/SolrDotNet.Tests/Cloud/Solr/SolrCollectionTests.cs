@@ -15,19 +15,25 @@ public class SolrCollectionTests
     [Fact]
     public void GetAliasUrlWhenEmpty()
     {
-        // Arrange
-        var alias = new SolrCloudAlias("test", new List<string>());
+        Assert.Throws<NoAliveNodeException>(() => new SolrCloudAlias("test", new List<string>()));
+    }
+
+    [Fact]
+    public void TestGetAliasWhenHasOneLiveNode_ShouldReturnFirstUri()
+    {
+        // Arrange 
+        var nodes = new[] { "172.18.0.3:8983_solr",};
+        var alias = new SolrCloudAlias("xd", nodes);
         
         // Act
 
         var subject = alias.GetUrl(false);
         
         // Test
-        
-        subject.ShouldBeNull();
-
+        subject.ShouldNotBeNull();
+        subject.ShouldBe(new Uri("http://172.18.0.3:8983/solr/xd"));
     }
-
+    
     [Fact]
     public void TestGetAliasWhenHasLiveNodes_ShouldReturnRandomUri()
     {
