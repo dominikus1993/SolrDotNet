@@ -4,6 +4,7 @@ using System.Linq;
 
 using Shouldly;
 
+using SolrDotNet.Cloud.Exceptions;
 using SolrDotNet.Cloud.Extensions;
 
 using Xunit;
@@ -30,6 +31,6 @@ public class SolrLiveNodesParserTests
     public void ParseLiveNodesTestWhenListIsEmpty()
     {
         var nodes = new List<string>() {};
-        Assert.Throws<Exception>(() => SolrLiveNodesParser.ParseAlias(nodes, "xd").ToList());
+        Assert.Throws<NoAliveNodeException>(() => SolrLiveNodesParser.ParseAlias(nodes, "xd").ToList());
     }
 }
