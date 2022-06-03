@@ -16,8 +16,7 @@ using Nuke.Common.Utilities;
     OnPushBranches = new[] { "master", "dev" },
     OnPullRequestBranches = new[] { "master", "dev" },
     InvokedTargets = new[] { nameof(RunTests) },
-    PublishArtifacts = false,
-    EnableGitHubContext = true)
+    PublishArtifacts = false)
 ]
 
 [CustomGitHubActions("Windows_release",
@@ -26,7 +25,6 @@ using Nuke.Common.Utilities;
     OnPushBranches = new[] { "refs/tags/*" },
     InvokedTargets = new[] { nameof(NuGet) },
     ImportSecrets = new[] { "Nuget_Key" },
-    EnableGitHubContext = true,
     PublishArtifacts = true)
 ]
 
