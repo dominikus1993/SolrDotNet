@@ -1,8 +1,8 @@
 ﻿<Project>
     <PropertyGroup>
         <Copyright>Copyright © 2020 Your Company</Copyright>
-        <Authors>Your Authors</Authors>
-        <VersionPrefix>0.3.0</VersionPrefix>
+        <Authors>Dominik Kotecki</Authors>
+        <VersionPrefix>1.0.0</VersionPrefix>
         <PackageReleaseNotes>• Fixed bugs</PackageReleaseNotes>
         <PackageIconUrl>
         </PackageIconUrl>
